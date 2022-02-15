@@ -1,4 +1,5 @@
 async_mode = None
+cors_allowed_origins = '*'
 
 import os
 
@@ -6,7 +7,7 @@ import socketio
 from online_users import online_users
 
 basedir = os.path.dirname(os.path.realpath(__file__))
-sio = socketio.Server(async_mode=async_mode, logger=False)
+sio = socketio.Server(async_mode=async_mode, cors_allowed_origins=cors_allowed_origins, logger=False)
 thread = None
 
 
