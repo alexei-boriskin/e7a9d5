@@ -80,3 +80,18 @@ export const addNewConvoToStore = (state, recipientId, message) => {
     }
   });
 };
+
+export const updateMessageInStore = (state, payload) => {
+  const { message } = payload;
+
+  return state.map((convo) => {
+    if (convo.id === message.conversationId) {
+      const convoCopy = { ...convo };
+      const index = convoCopy.messages.findIndex(m => m.id === message.id);
+      convoCopy.messages[index] = message;
+      return convoCopy;
+    } else {
+      return convo;
+    }
+  });
+};
