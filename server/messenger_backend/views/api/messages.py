@@ -48,3 +48,18 @@ class Messages(APIView):
             return JsonResponse({"message": message_json, "sender": sender})
         except Exception as e:
             return HttpResponse(status=500)
+
+    # Mark message as read
+    def patch(self, request, pk):
+        try:
+            user = get_user(request)
+
+            if user.is_anonymous:
+                return HttpResponse(status=401)
+
+            message = Message.objects.filter(id=pk).first()
+            message.read=True
+            message.save()
+            return HttpResponse(status=204)
+        except Exception as e:
+            return HttpResponse(status=500)    

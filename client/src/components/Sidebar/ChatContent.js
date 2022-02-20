@@ -18,6 +18,23 @@ const useStyles = makeStyles((theme) => ({
     color: "#9CADC8",
     letterSpacing: -0.17,
   },
+  readBox: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 17,
+  },
+  unreadNumber: {
+    fontSize: 12,
+    letterSpacing: -0.17,
+    fontWeight: "bold",
+    color: "#FFFFFF",
+    padding: 7,
+    background: "#3F8EFF",
+    borderRadius: "50%",
+    minWidth: "34px",
+    textAlign: "center"
+  },
 }));
 
 const ChatContent = (props) => {
@@ -25,6 +42,10 @@ const ChatContent = (props) => {
 
   const { conversation } = props;
   const { latestMessageText, otherUser } = conversation;
+  let unreadNumber = 0
+  conversation?.messages?.forEach(message => {
+    if (!message.read && message.senderId === conversation.otherUser.id) unreadNumber++
+  });
 
   return (
     <Box className={classes.root}>
@@ -35,6 +56,9 @@ const ChatContent = (props) => {
         <Typography className={classes.previewText}>
           {latestMessageText}
         </Typography>
+      </Box>
+      <Box className={classes.readBox}>
+        {unreadNumber > 0 ? <Typography className={classes.unreadNumber}>{unreadNumber}</Typography> : null}
       </Box>
     </Box>
   );
